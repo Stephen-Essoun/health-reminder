@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/colors.dart';
+import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/module/onboard_module.dart';
 import 'onboarding_class.dart';
 
@@ -28,6 +29,7 @@ class _OnBoradingPageState extends State<OnBoradingPage> {
   @override
   Widget build(BuildContext context) {
     PageNotifier pageNotifier = PageNotifier();
+    PageNotifier pageNotifier2 = PageNotifier();
     return Scaffold(
         body: SafeArea(
       child: ValueListenableBuilder(
@@ -59,7 +61,8 @@ class _OnBoradingPageState extends State<OnBoradingPage> {
                         height: 50,
                         width: 132,
                         child: ElevatedButton.icon(
-                          onPressed: () {
+                          onPressed: ()async {
+                            value == 2? await Navigator.of(context).pushNamed(signInRoute):
                             controller.nextPage(
                                 duration: const Duration(milliseconds: 500),
                                 curve: Curves.easeInCirc);

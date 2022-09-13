@@ -31,7 +31,7 @@ class OnBoardingContent extends StatelessWidget {
           decoration: const BoxDecoration(
             color: white,
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           ),
           child: Padding(
             padding: const EdgeInsets.only(top: 100, left: 30, right: 30),
