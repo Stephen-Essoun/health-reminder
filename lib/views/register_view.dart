@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pillset/views/toggle_view.dart';
-
 import '../commons/components/textfield.dart';
 import '../commons/utils/colors.dart';
 import '../commons/utils/text_theme.dart';
