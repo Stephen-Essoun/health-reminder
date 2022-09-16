@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "289036679954",
+    "project_id": "pill-set-reminder",
+    "storage_bucket": "pill-set-reminder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289036679954:android:2e4f7e733aac311ab6d1cb",
+        "android_client_info": {
+          "package_name": "essoun.stephen.pillset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289036679954-s6evn72ks7ob08ns20mgfg2p6cmk0r2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf5Pv1__vXWR3bl8HwNVMb_oJHGHfShVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289036679954-s6evn72ks7ob08ns20mgfg2p6cmk0r2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
