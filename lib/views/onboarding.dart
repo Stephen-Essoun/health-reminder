@@ -29,8 +29,7 @@ class _OnBoradingPageState extends State<OnBoradingPage> {
   @override
   Widget build(BuildContext context) {
     PageNotifier pageNotifier = PageNotifier();
-    PageNotifier pageNotifier2 = PageNotifier();
-    return Scaffold(
+     return Scaffold(
         body: SafeArea(
       child: ValueListenableBuilder(
           valueListenable: pageNotifier,

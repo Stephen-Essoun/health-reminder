@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pillset/commons/utils/colors.dart';
-import 'package:pillset/views/nav_view/fourth_view.dart';
-import 'package:pillset/views/nav_view/home_view.dart';
-import 'package:pillset/views/nav_view/second_view.dart';
-import 'package:pillset/views/nav_view/third_view.dart';
+import 'package:pillset/views/nav_but_view/fourth_view.dart';
+import 'package:pillset/views/home_view.dart';
+import 'package:pillset/views/nav_but_view/second_view.dart';
+import 'package:pillset/views/nav_but_view/third_view.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
