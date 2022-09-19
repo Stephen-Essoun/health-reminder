@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 
+///this model is passed to the gridview containers in the home page and the tiles in the second page.
+///
+///
 class CModel {
   String heading;
   String image;
@@ -16,7 +19,7 @@ class CModel {
 List cmodel = [
   CModel(
       heading: 'SATURATION',
-      image: 'images/heart.png',
+      image: 'images/blood.png',
       widget: TextSpan(
         text: '99',
         style: textTheme.headline4,
@@ -27,7 +30,7 @@ List cmodel = [
       ending: 'Last update 5h'),
   CModel(
       heading: 'HEARTRATE',
-      image: 'images/heart.png',
+      image: 'images/heartrate.png',
       widget: TextSpan(
         text: '91',
         style: textTheme.headline4,
@@ -38,7 +41,7 @@ List cmodel = [
       ending: 'Last update 5h'),
   CModel(
       heading: 'PRESSURE',
-      image: 'images/heart.png',
+      image: 'images/pressure.png',
       widget: TextSpan(
         text: '120/80',
         style: textTheme.headline4,
@@ -49,7 +52,7 @@ List cmodel = [
       ending: 'Last update 5h'),
   CModel(
       heading: 'TEMPERATURE',
-      image: 'images/heart.png',
+      image: 'images/temperature.png',
       widget: TextSpan(
         text: '37.8',
         style: textTheme.headline4!.copyWith(color: Colors.yellow),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 import 'package:pillset/module/container_module.dart';
+import 'package:pillset/module/lmodel.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 import '../commons/components/appbar.dart';
 
 class HomeView extends StatefulWidget {
@@ -33,41 +33,90 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: GridView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 300,
-                    childAspectRatio: 3 / 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+              GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 300,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: cmodel.length,
+                itemBuilder: (ctx, index) => Container(
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  itemCount: cmodel.length,
-                  itemBuilder: (ctx, index) => Container(
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    height: 300,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: gridColumn(index),
-                    ),
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: gridColumn(index),
                   ),
                 ),
               ),
+              //end of gridview
+              const SizedBox(
+                height: 20,
+              ),
               SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width / 1,
                 child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (ctx, index) =>   ListTile(
-                    leading: const CircleAvatar(
-                      backgroundImage: AssetImage('images/heart.png'),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: cmodel.length,
+                  itemBuilder: (ctx, index) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    child: Container(
+                      margin: EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(10)),
+                      height: 80,
+                      child: Row(
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    AssetImage(lmodel[index].leading),
+                                backgroundColor: Colors.transparent,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  lmodel[index].title,
+                                  style: textTheme.headline1!.copyWith(fontSize: 20),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(lmodel[index].subtitle),
+                                    const SizedBox(
+                                      width: 150,
+                                    ),
+                                    Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
+                                        child: lmodel[index].trailing)
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    title: const Text('Medicine'),
-                    subtitle:const Text('number of pills'),
-                    trailing:Column(children: [...List.generate(cmodel.length, (index) => Container(height: 12,width: 6,))],) ,
                   ),
                 ),
               )
@@ -82,7 +131,6 @@ class _HomeViewState extends State<HomeView> {
   Column gridColumn(int index) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Align(
           alignment: Alignment.bottomLeft,
@@ -91,19 +139,18 @@ class _HomeViewState extends State<HomeView> {
             style: textTheme.headline2,
           ),
         ),
-        Container(
-          height: 40,
-          width: 10,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(cmodel[index].image),
-            ),
+        Align(
+            alignment: Alignment.bottomLeft,
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              backgroundImage: AssetImage(cmodel[index].image),
+            )),
+        Expanded(
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: RichText(text: cmodel[index].widget),
           ),
         ),
-        Expanded(
-            child: Align(
-                alignment: Alignment.bottomLeft,
-                child: RichText(text: cmodel[index].widget))),
         Align(
           alignment: Alignment.centerLeft,
           child: Text(

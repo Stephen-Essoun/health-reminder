@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
        valueListenable: onTap,
       builder: (context,value,child) {
         return Scaffold(
-          // extendBody: true,
+          extendBody: true,
           body: SafeArea(
             bottom: false,
             child: pages[value],
@@ -39,8 +39,7 @@ class _MainScreenState extends State<MainScreen> {
             color: white,
             shape: const CircularNotchedRectangle(),
             child: BottomNavigationBar(
-                // key: navKey,
-                backgroundColor: Colors.transparent,
+                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: green,
