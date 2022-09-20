@@ -3,6 +3,8 @@ import 'package:pillset/commons/components/appbar.dart';
 import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 
+import '../../module/profile_model.dart';
+
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
@@ -36,12 +38,36 @@ class ProfileView extends StatelessWidget {
                         'Benedict',
                         style: textTheme.headline1!.copyWith(fontSize: 20),
                       ),
-                      Text('Subtitle', style: textTheme.headline4!.copyWith(color: darkGrey))
+                      Text('A lot of words these days',
+                          style: textTheme.headline2),
                     ],
                   )
                 ],
               ),
-            )
+            ),
+            ...List.generate(
+                pmodel.length,
+                (index) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.height/1,
+                        decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Row(
+                          children: [
+                            pmodel[index].leading,
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Text(pmodel[index].identifier,style: textTheme.headline2),
+                            const Spacer(),
+                            pmodel[index].trailing
+                          ],
+                        ),
+                      ),
+                    ))
           ],
         ),
       ),

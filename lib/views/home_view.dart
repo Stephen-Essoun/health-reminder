@@ -96,7 +96,8 @@ class _HomeViewState extends State<HomeView> {
                               children: [
                                 Text(
                                   lmodel[index].title,
-                                  style: textTheme.headline1!.copyWith(fontSize: 20),
+                                  style: textTheme.headline1!
+                                      .copyWith(fontSize: 20),
                                 ),
                                 Row(
                                   children: [
