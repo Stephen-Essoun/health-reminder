@@ -42,6 +42,7 @@ class _HomeViewState extends State<HomeView> {
                   childAspectRatio: 3 / 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
+                  mainAxisExtent: 150
                 ),
                 itemCount: cmodel.length,
                 itemBuilder: (ctx, index) => Container(
@@ -131,7 +132,7 @@ class _HomeViewState extends State<HomeView> {
   /// This medthod is built by the above grid view
   Column gridColumn(int index) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Align(
           alignment: Alignment.bottomLeft,
@@ -141,16 +142,14 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         Align(
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.centerLeft,
             child: CircleAvatar(
               backgroundColor: Colors.transparent,
               backgroundImage: AssetImage(cmodel[index].image),
             )),
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: RichText(text: cmodel[index].widget),
-          ),
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: RichText(text: cmodel[index].widget),
         ),
         Align(
           alignment: Alignment.centerLeft,

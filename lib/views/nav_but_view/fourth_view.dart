@@ -23,7 +23,7 @@ class ProfileView extends StatelessWidget {
                   const Center(
                     child: CircleAvatar(
                       backgroundColor: white,
-                      backgroundImage: AssetImage('images/heart.png'),
+                      backgroundImage: AssetImage('images/avatar.png'),
                       radius: 30,
                     ),
                   ),
