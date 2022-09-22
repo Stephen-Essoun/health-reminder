@@ -8,14 +8,37 @@ import 'package:pillset/views/signin_view.dart';
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
-  runApp(MaterialApp(
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    onBoardRoute;
+    super.initState();
+  }
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: homeRoute,
+    initialRoute: onBoardRoute,
     routes: {
       onBoardRoute: (context) => const OnBoradingPage(),
       signInRoute: (context) => const SignInView(),
       registerRoute: (context) => const RegisterView(),
       homeRoute:(context) => const MainScreen()
     },
-  ));
+  );
+  }
 }
+
+

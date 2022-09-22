@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/colors.dart';
+import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 import 'package:pillset/commons/components/textfield.dart';
 
@@ -85,7 +86,7 @@ class _SignInViewState extends State<SignInView> {
                   height: 40,
                   width: MediaQuery.of(context).size.height / 1.5,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: green,
                           shape: RoundedRectangleBorder(
@@ -95,7 +96,7 @@ class _SignInViewState extends State<SignInView> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(
-                    onTap: () {},
+                    onTap: ()=>Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false),
                     child: Align(
                       alignment: Alignment.center,
                       child: RichText(

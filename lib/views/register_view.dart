@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pillset/commons/utils/routes.dart';
 import '../commons/components/textfield.dart';
 import '../commons/utils/colors.dart';
 import '../commons/utils/text_theme.dart';
@@ -129,28 +130,28 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 40,
                   width: MediaQuery.of(context).size.height / 1.5,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: ()=>Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: green,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                           textStyle: const TextStyle(fontSize: 18)),
-                      child: const Text('Login'))),
+                      child: const Text('Register'))),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () =>Navigator.of(context).pushNamed(signInRoute),
                   child: Align(
                     alignment: Alignment.center,
                     child: RichText(
                       text: const TextSpan(
-                        text: "Don't have an account yet?",
+                        text: "Already a member?",
                         style: TextStyle(
                           color: whiteGrey,
                         ),
                         children: [
                           TextSpan(
-                            text: 'Register.',
+                            text: 'Login.',
                             style: TextStyle(
                               color: green,
                             ),
