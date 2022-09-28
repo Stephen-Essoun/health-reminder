@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
-import '../commons/utils/colors.dart';
-import '../commons/utils/text_theme.dart';
+
+import '../../commons/utils/colors.dart';
+import '../../commons/utils/text_theme.dart'; 
 
 class OnBoardingContent extends StatelessWidget {
   const OnBoardingContent({

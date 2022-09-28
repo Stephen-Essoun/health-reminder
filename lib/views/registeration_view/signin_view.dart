@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pillset/authentication/auth_exception.dart';
+import 'package:pillset/authentication/auth_service.dart';
 import 'package:pillset/commons/utils/colors.dart';
+import 'package:pillset/commons/utils/error_dialogue.dart';
 import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 import 'package:pillset/commons/components/textfield.dart';
@@ -40,8 +43,9 @@ class _SignInViewState extends State<SignInView> {
               Container(
                 height: MediaQuery.of(context).size.height / 4,
                 decoration: const BoxDecoration(
-                    image:
-                        DecorationImage(image: AssetImage('images/heart.png'))),
+                    image: DecorationImage(
+                  image: AssetImage('images/login.png'),
+                )),
               ),
               Column(children: [
                 Text(
@@ -86,7 +90,27 @@ class _SignInViewState extends State<SignInView> {
                   height: 40,
                   width: MediaQuery.of(context).size.height / 1.5,
                   child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false),
+                      onPressed: () async {
+                        final email = emailController.text;
+                        final password = passwordController.text;
+                        try {
+                          await AuthService.firebase()
+                              .login(email: email, password: password)
+                              .then((value) => Navigator.of(context)
+                                  .pushNamedAndRemoveUntil(
+                                      homeRoute, (route) => false));
+                        } on WrongPasswordAuthException {
+                          showErrorDialog(
+                            context,
+                            'wrong password',
+                          );
+                        } on UserNotFoundAuthException {
+                          showErrorDialog(
+                            context,
+                            'user not found',
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: green,
                           shape: RoundedRectangleBorder(
@@ -96,7 +120,8 @@ class _SignInViewState extends State<SignInView> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(
-                    onTap: ()=>Navigator.of(context).pushNamedAndRemoveUntil(registerRoute, (route) => false),
+                    onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                        registerRoute, (route) => false),
                     child: Align(
                       alignment: Alignment.center,
                       child: RichText(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pillset/authentication/auth_exception.dart';
+import 'package:pillset/authentication/auth_service.dart';
+import 'package:pillset/commons/utils/error_dialogue.dart';
 import 'package:pillset/commons/utils/routes.dart';
-import '../commons/components/textfield.dart';
-import '../commons/utils/colors.dart';
-import '../commons/utils/text_theme.dart';
+import '../../commons/components/textfield.dart';
+import '../../commons/utils/colors.dart';
+import '../../commons/utils/text_theme.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -58,7 +61,9 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 Text(
                   'Create your new account',
-                  style: textTheme.headline3!.copyWith(fontSize: 20),
+                  style: textTheme.headline3!.copyWith(
+                    fontSize: 20,
+                  ),
                 ),
               ]),
               const SizedBox(
@@ -127,20 +132,51 @@ class _RegisterViewState extends State<RegisterView> {
                 height: 180,
               ),
               SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.height / 1.5,
-                  child: ElevatedButton(
-                      onPressed: ()=>Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (route) => false),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: green,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          textStyle: const TextStyle(fontSize: 18)),
-                      child: const Text('Register'))),
+                height: 40,
+                width: MediaQuery.of(context).size.height / 1.5,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final email = emailController.text;
+                    final password = passwordController.text;
+                    try {
+                      await AuthService.firebase()
+                          .createUser(email: email, password: password)
+                          .then((value) => Navigator.of(context)
+                              .pushNamedAndRemoveUntil(
+                                  homeRoute, (route) => false));
+                      // final user = AuthService.firebase().currentUser;
+                      AuthService.firebase().sendEmailVerification();
+                    } on WeakPasswordAuthException {
+                      showErrorDialog(context, 'weak password');
+                    } on EmailAlreadyInUseAuthException {
+                      showErrorDialog(
+                        context,
+                        'Email is already in use',
+                      );
+                    } on GenericAuthException {
+                      showErrorDialog(
+                        context,
+                        'Failed to register',
+                      );
+                    } on InvalidEmailAuthException {
+                      showErrorDialog(
+                        context,
+                        'Enter a valid email address',
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      textStyle: const TextStyle(fontSize: 18)),
+                  child: const Text('Register'),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(
-                  onTap: () =>Navigator.of(context).pushNamed(signInRoute),
+                  onTap: () => Navigator.of(context).pushNamed(signInRoute),
                   child: Align(
                     alignment: Alignment.center,
                     child: RichText(
