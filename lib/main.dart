@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pillset/authentication/auth_service.dart';
 import 'package:pillset/commons/utils/routes.dart';
+import 'package:pillset/firebase_options.dart';
 import 'package:pillset/views/home_view.dart';
 import 'package:pillset/views/main_screen.dart';
 import 'views/onboarding_view/onboarding.dart';
@@ -10,18 +12,22 @@ import 'views/registeration_view/verify_email_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp( MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:const HomePage(),
-      routes: {
-        onBoardRoute: (context) => const OnBoradingPage(),
-        signInRoute: (context) => const SignInView(),
-        registerRoute: (context) => const RegisterView(),
-        homeRoute: (context) => const MainScreen()
-      },
-    ));
- }
-  
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    // home:const HomePage(),
+    initialRoute: homeRoute,
+    routes: {
+      onBoardRoute: (context) => const OnBoradingPage(),
+      signInRoute: (context) => const SignInView(),
+      registerRoute: (context) => const RegisterView(),
+      homeRoute: (context) => const MainScreen(),
+      verifyEmailRoute: (context) => const VerifyEmailView(),
+    },
+  ));
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,7 +35,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future:AuthService.firebase().initialize(),
+      future: Firebase.initializeApp(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:

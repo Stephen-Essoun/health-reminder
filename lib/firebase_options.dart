@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -50,20 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDf5Pv1__vXWR3bl8HwNVMb_oJHGHfShVA',
-    appId: '1:289036679954:android:2e4f7e733aac311ab6d1cb',
-    messagingSenderId: '289036679954',
-    projectId: 'pill-set-reminder',
-    storageBucket: 'pill-set-reminder.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAdaFdKc1qE8R3-dOnl-GDPL76JHhwtzvM',
-    appId: '1:289036679954:ios:f08619179df95586b6d1cb',
-    messagingSenderId: '289036679954',
-    projectId: 'pill-set-reminder',
-    storageBucket: 'pill-set-reminder.appspot.com',
-    iosClientId: '289036679954-7ji45l3e14pmbjdtapeek4e28k59v7ed.apps.googleusercontent.com',
-    iosBundleId: 'essoun.stephen.pillset',
+    apiKey: 'AIzaSyBEiysLyT0MFhVLNFmnxGx3LQX3bYdOL-A',
+    appId: '1:418807925957:android:0f352b92511aef14c074ac',
+    messagingSenderId: '418807925957',
+    projectId: 'pill-reminder-70423',
+    storageBucket: 'pill-reminder-70423.appspot.com',
   );
 }

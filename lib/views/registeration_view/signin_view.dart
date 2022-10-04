@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:pillset/authentication/auth_exception.dart';
-import 'package:pillset/authentication/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart'; 
+import 'package:pillset/authentication/new_auth.dart';
 import 'package:pillset/commons/utils/colors.dart';
-import 'package:pillset/commons/utils/error_dialogue.dart';
-import 'package:pillset/commons/utils/routes.dart';
+ import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 import 'package:pillset/commons/components/textfield.dart';
 
@@ -34,6 +33,7 @@ class _SignInViewState extends State<SignInView> {
 
   @override
   Widget build(BuildContext context) {
+    EmailAuth emailAuth = EmailAuth();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -91,25 +91,45 @@ class _SignInViewState extends State<SignInView> {
                   width: MediaQuery.of(context).size.height / 1.5,
                   child: ElevatedButton(
                       onPressed: () async {
-                        final email = emailController.text;
-                        final password = passwordController.text;
+                        String email = 'boit7845@gmail.com';
+                        String password = '1234567';
                         try {
-                          await AuthService.firebase()
-                              .login(email: email, password: password)
-                              .then((value) => Navigator.of(context)
-                                  .pushNamedAndRemoveUntil(
-                                      homeRoute, (route) => false));
-                        } on WrongPasswordAuthException {
-                          showErrorDialog(
-                            context,
-                            'wrong password',
-                          );
-                        } on UserNotFoundAuthException {
-                          showErrorDialog(
-                            context,
-                            'user not found',
-                          );
+                          await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email: email ,
+                            password: password,
+                          ).then((value) => FirebaseAuth.instance.currentUser!.sendEmailVerification());
+                        } on FirebaseAuthException catch (_) {
+                          print(_.code);
                         }
+                        // final email = emailController.text;
+                        // final password = passwordController.text;
+                        // try {
+                        //   await AuthService.firebase()
+                        //       .login(email: email, password: password);
+                        //   final user = AuthService.firebase().currentUser;
+                        //   if (user?.isEmailVerified ?? false) {
+                        //     Navigator.of(context).pushNamedAndRemoveUntil(
+                        //       homeRoute,
+                        //       (route) => false,
+                        //     );
+                        //   } else {
+                        //     Navigator.of(context).pushNamedAndRemoveUntil(
+                        //       verifyEmailRoute,
+                        //       (route) => false,
+                        //     );
+                        //   }
+                        // } on WrongPasswordAuthException {
+                        //   showErrorDialog(
+                        //     context,
+                        //     'wrong password',
+                        //   );
+                        // } on UserNotFoundAuthException {
+                        //   showErrorDialog(
+                        //     context,
+                        //     'user not found',
+                        //   );
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: green,
@@ -120,24 +140,28 @@ class _SignInViewState extends State<SignInView> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(
-                    onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
-                        registerRoute, (route) => false),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: RichText(
-                          text: const TextSpan(
-                              text: "Don't have an account yet?",
-                              style: TextStyle(
-                                color: whiteGrey,
-                              ),
-                              children: [
-                            TextSpan(
-                                text: 'Register',
-                                style: TextStyle(
-                                  color: green,
-                                ))
-                          ])),
-                    )),
+                  onTap: () => Navigator.of(context)
+                      .pushNamedAndRemoveUntil(registerRoute, (route) => false),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: RichText(
+                      text: const TextSpan(
+                        text: "Don't have an account yet?",
+                        style: TextStyle(
+                          color: whiteGrey,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Register',
+                            style: TextStyle(
+                              color: green,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               )
             ],
           ),

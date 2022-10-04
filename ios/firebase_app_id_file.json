@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:289036679954:ios:f08619179df95586b6d1cb",
-  "FIREBASE_PROJECT_ID": "pill-set-reminder",
-  "GCM_SENDER_ID": "289036679954"
+  "GOOGLE_APP_ID": "1:418807925957:ios:e00e82fb753bb6a8c074ac",
+  "FIREBASE_PROJECT_ID": "pill-reminder-70423",
+  "GCM_SENDER_ID": "418807925957"
 }

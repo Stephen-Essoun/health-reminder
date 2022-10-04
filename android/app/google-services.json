@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "289036679954",
-    "project_id": "pill-set-reminder",
-    "storage_bucket": "pill-set-reminder.appspot.com"
+    "project_number": "418807925957",
+    "project_id": "pill-reminder-70423",
+    "storage_bucket": "pill-reminder-70423.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:289036679954:android:2e4f7e733aac311ab6d1cb",
+        "mobilesdk_app_id": "1:418807925957:android:0f352b92511aef14c074ac",
         "android_client_info": {
           "package_name": "essoun.stephen.pillset"
         }
       },
       "oauth_client": [
         {
-          "client_id": "289036679954-s6evn72ks7ob08ns20mgfg2p6cmk0r2e.apps.googleusercontent.com",
+          "client_id": "418807925957-ev3lkk51tttfb0f18j8sr09ue4lho8ba.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDf5Pv1__vXWR3bl8HwNVMb_oJHGHfShVA"
+          "current_key": "AIzaSyBEiysLyT0MFhVLNFmnxGx3LQX3bYdOL-A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "289036679954-s6evn72ks7ob08ns20mgfg2p6cmk0r2e.apps.googleusercontent.com",
+              "client_id": "418807925957-ev3lkk51tttfb0f18j8sr09ue4lho8ba.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "418807925957-7q05p4qgo7pes1aj2go1sg538qj19bpk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "essoun.stephen.pillset"
+              }
             }
           ]
         }
