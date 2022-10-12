@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:pillset/authentication/auth_service.dart';
 import 'package:pillset/commons/utils/colors.dart';
 
-class PModel {
+class Tile {
   Widget leading;
   String identifier;
   Widget trailing;
-  PModel(
-      {required this.leading,
-      required this.identifier,
-      required this.trailing});
+  void Function()? onPressed;
+  Tile({
+    this.onPressed,
+    required this.leading,
+    required this.identifier,
+    required this.trailing,
+  });
 }
 
 List pmodel = [
-  PModel(
+  Tile(
       leading: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(
@@ -28,7 +32,7 @@ List pmodel = [
           color: darkGrey,
         ),
       )),
-  PModel(
+  Tile(
       leading: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(
@@ -44,7 +48,7 @@ List pmodel = [
           color: darkGrey,
         ),
       )),
-  PModel(
+  Tile(
       leading: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(
@@ -60,7 +64,7 @@ List pmodel = [
           color: darkGrey,
         ),
       )),
-  PModel(
+  Tile(
       leading: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(
@@ -76,7 +80,7 @@ List pmodel = [
           color: darkGrey,
         ),
       )),
-  PModel(
+  Tile(
       leading: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(
@@ -92,7 +96,10 @@ List pmodel = [
           color: darkGrey,
         ),
       )),
-  PModel(
+  Tile(
+      onPressed: () async {
+        await AuthService.firebase().logout();
+      },
       leading: const Padding(
         padding: EdgeInsets.all(8.0),
         child: Icon(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pillset/authentication/auth_exception.dart';
-import 'package:pillset/authentication/auth_service.dart';
-import 'package:pillset/commons/utils/error_dialogue.dart';
 import 'package:pillset/commons/utils/routes.dart';
+import '../../authentication/auth_exception.dart';
+import '../../authentication/auth_service.dart';
 import '../../commons/components/textfield.dart';
 import '../../commons/utils/colors.dart';
+import '../../commons/utils/error_dialogue.dart';
 import '../../commons/utils/text_theme.dart';
 
 class RegisterView extends StatefulWidget {
@@ -136,14 +136,14 @@ class _RegisterViewState extends State<RegisterView> {
                 width: MediaQuery.of(context).size.height / 1.5,
                 child: ElevatedButton(
                   onPressed: () async {
-                    final email = emailController.text;
-                    final password = passwordController.text;
                     try {
                       await AuthService.firebase()
-                          .createUser(email: email, password: password)
+                          .createUser(
+                              email: emailController.text,
+                              password: passwordController.text                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
                           .then((value) => Navigator.of(context)
                               .pushNamedAndRemoveUntil(
-                                  homeRoute, (route) => false));
+                                  verifyEmailRoute, (route) => false));
                       // final user = AuthService.firebase().currentUser;
                       AuthService.firebase().sendEmailVerification();
                     } on WeakPasswordAuthException {

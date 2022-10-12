@@ -38,12 +38,11 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 300,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  mainAxisExtent: 150
-                ),
+                    maxCrossAxisExtent: 300,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    mainAxisExtent: 150),
                 itemCount: cmodel.length,
                 itemBuilder: (ctx, index) => Container(
                   decoration: BoxDecoration(
@@ -104,7 +103,7 @@ class _HomeViewState extends State<HomeView> {
                                   children: [
                                     Text(lmodel[index].subtitle),
                                     const SizedBox(
-                                      width: 150,
+                                      width: 100,
                                     ),
                                     Padding(
                                         padding: const EdgeInsets.symmetric(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pillset/authentication/auth_service.dart';
+import 'package:pillset/commons/utils/error_dialogue.dart';
 import 'package:pillset/commons/utils/routes.dart';
-
-import '../../authentication/auth_service.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -24,9 +24,14 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               "If you haven't recieve an email yet,click the link below"),
           TextButton(
             onPressed: () async {
-              await AuthService.firebase().sendEmailVerification().then(
-                  (value) => Navigator.of(context)
-                      .pushNamedAndRemoveUntil(signInRoute, (route) => false));
+              AuthService.firebase().sendEmailVerification().then((value) {
+                showErrorDialog(
+                  context,
+                  "We've sent you an email verification.\nPlease open and verify your account",
+                );
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(signInRoute, (route) => false);
+              });
             },
             child: const Text(
               'Send email verification',

@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart'; 
-import 'package:pillset/authentication/new_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/colors.dart';
- import 'package:pillset/commons/utils/routes.dart';
+import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 import 'package:pillset/commons/components/textfield.dart';
+
+import '../../authentication/auth_exception.dart';
+import '../../authentication/auth_service.dart';
+import '../../commons/utils/error_dialogue.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -14,6 +17,7 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+  final _formKey = GlobalKey<FormState>();
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
@@ -33,7 +37,6 @@ class _SignInViewState extends State<SignInView> {
 
   @override
   Widget build(BuildContext context) {
-    EmailAuth emailAuth = EmailAuth();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -63,80 +66,80 @@ class _SignInViewState extends State<SignInView> {
               const SizedBox(
                 height: 20,
               ),
-              InputField(
-                controller: emailController,
-                labelText: 'Email',
-                prefixIcon: const Icon(Icons.email_outlined),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InputField(
-                controller: passwordController,
-                labelText: 'Password',
-                prefixIcon: const Icon(Icons.lock_outline),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    foregroundColor: green,
-                  ),
-                  child: const Text('Forgot password'),
+              Form(key: _formKey,
+                child: Column(
+                  children: [
+                    InputField(
+                      controller: emailController,
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.email_outlined),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    InputField(
+                      controller: passwordController,
+                      labelText: 'Password',
+                      prefixIcon: const Icon(Icons.lock_outline),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          foregroundColor: green,
+                        ),
+                        child: const Text('Forgot password'),
+                      ),
+                    ),
+                    SizedBox(
+                        height: 40,
+                        width: MediaQuery.of(context).size.height / 1.5,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              try {
+                                await AuthService.firebase().login(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                                final user = AuthService.firebase().currentUser;
+                                if (user?.isEmailVerified ?? false) {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    homeRoute,
+                                    (route) => false,
+                                  );
+                                } else {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    verifyEmailRoute,
+                                    (route) => false,
+                                  );
+                                }
+                              } on WrongPasswordAuthException {
+                                showErrorDialog(
+                                  context,
+                                  'wrong password',
+                                );
+                              } on UserNotFoundAuthException {
+                                showErrorDialog(
+                                  context,
+                                  'user not found',
+                                );
+                              } on GenericAuthException {
+                                showErrorDialog(
+                                  context,
+                                  'Operation failed',
+                                );
+                              }
+                            }, 
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: green,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                textStyle: const TextStyle(fontSize: 18)),
+                            child: const Text('Login'))),
+                  ],
                 ),
               ),
-              SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.height / 1.5,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        String email = 'boit7845@gmail.com';
-                        String password = '1234567';
-                        try {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                            email: email ,
-                            password: password,
-                          ).then((value) => FirebaseAuth.instance.currentUser!.sendEmailVerification());
-                        } on FirebaseAuthException catch (_) {
-                          print(_.code);
-                        }
-                        // final email = emailController.text;
-                        // final password = passwordController.text;
-                        // try {
-                        //   await AuthService.firebase()
-                        //       .login(email: email, password: password);
-                        //   final user = AuthService.firebase().currentUser;
-                        //   if (user?.isEmailVerified ?? false) {
-                        //     Navigator.of(context).pushNamedAndRemoveUntil(
-                        //       homeRoute,
-                        //       (route) => false,
-                        //     );
-                        //   } else {
-                        //     Navigator.of(context).pushNamedAndRemoveUntil(
-                        //       verifyEmailRoute,
-                        //       (route) => false,
-                        //     );
-                        //   }
-                        // } on WrongPasswordAuthException {
-                        //   showErrorDialog(
-                        //     context,
-                        //     'wrong password',
-                        //   );
-                        // } on UserNotFoundAuthException {
-                        //   showErrorDialog(
-                        //     context,
-                        //     'user not found',
-                        //   );
-                        // }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: green,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          textStyle: const TextStyle(fontSize: 18)),
-                      child: const Text('Login'))),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: GestureDetector(

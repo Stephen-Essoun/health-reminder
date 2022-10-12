@@ -53,10 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBEiysLyT0MFhVLNFmnxGx3LQX3bYdOL-A',
-    appId: '1:418807925957:android:0f352b92511aef14c074ac',
-    messagingSenderId: '418807925957',
-    projectId: 'pill-reminder-70423',
-    storageBucket: 'pill-reminder-70423.appspot.com',
+    apiKey: 'AIzaSyCxwiakt0LdCyPcN8Ums8ypVZf-ofLSJ8g',
+    appId: '1:475169083092:android:0046396dea702f656d7541',
+    messagingSenderId: '475169083092',
+    projectId: 'pillset',
+    storageBucket: 'pillset.appspot.com',
   );
 }
