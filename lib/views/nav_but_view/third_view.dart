@@ -4,6 +4,8 @@ import 'package:pillset/commons/components/appbar.dart';
 import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
 
+import '../../providers/click_to_swap_provider.dart';
+
 class StatisticsView extends StatelessWidget {
   const StatisticsView({super.key});
 
@@ -167,12 +169,3 @@ List<double> percent = [
   .9,
 ];
 
-class Clicked extends ValueNotifier<bool> {
-  Clicked._sharedInference() : super(true);
-  static final Clicked _shared = Clicked._sharedInference();
-  factory Clicked() => _shared;
-  void isClicked(bool clicked) {
-    value = clicked;
-    notifyListeners();
-  }
-}

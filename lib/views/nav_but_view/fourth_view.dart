@@ -171,27 +171,30 @@ class Tile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        height: 50,
-        width: MediaQuery.of(context).size.height / 1,
-        decoration: BoxDecoration(
-            color: white, borderRadius: BorderRadius.circular(30)),
-        child: Row(
-          children: [
-            leading,
-            const SizedBox(
-              width: 30,
-            ),
-            Text(
-              identifier,
-              style: textTheme.headline2,
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: trailing,
-            )
-          ],
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Container(
+          height: 50,
+          width: MediaQuery.of(context).size.height / 1,
+          decoration: BoxDecoration(
+              color: white, borderRadius: BorderRadius.circular(30)),
+          child: Row(
+            children: [
+              leading,
+              const SizedBox(
+                width: 30,
+              ),
+              Text(
+                identifier,
+                style: textTheme.headline2,
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: trailing,
+              )
+            ],
+          ),
         ),
       ),
     );
