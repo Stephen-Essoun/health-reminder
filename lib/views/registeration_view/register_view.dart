@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/routes.dart';
+import 'package:pillset/database/user_detailed.dart';
 import '../../authentication/auth_exception.dart';
 import '../../authentication/auth_service.dart';
 import '../../commons/components/textfield.dart';
@@ -17,6 +18,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   late TextEditingController nameController;
   late TextEditingController emailController;
+  late TextEditingController ageController;
   late TextEditingController passwordController;
   late TextEditingController cPasswordController;
 
@@ -24,6 +26,7 @@ class _RegisterViewState extends State<RegisterView> {
   void initState() {
     nameController = TextEditingController();
     emailController = TextEditingController();
+    ageController = TextEditingController();
     passwordController = TextEditingController();
     cPasswordController = TextEditingController();
     super.initState();
@@ -33,6 +36,7 @@ class _RegisterViewState extends State<RegisterView> {
   void dispose() {
     nameController.dispose();
     emailController.dispose();
+    ageController.dispose();
     passwordController.dispose();
     cPasswordController.dispose();
     super.dispose();
@@ -86,6 +90,14 @@ class _RegisterViewState extends State<RegisterView> {
                 height: 15,
               ),
               InputField(
+                controller: ageController,
+                labelText: 'Age',
+                prefixIcon: const Icon(Icons.lock_outline),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              InputField(
                 controller: passwordController,
                 labelText: 'Password',
                 prefixIcon: const Icon(Icons.lock_outline),
@@ -129,7 +141,7 @@ class _RegisterViewState extends State<RegisterView> {
                         ])),
               ),
               const SizedBox(
-                height: 180,
+                height: 100,
               ),
               SizedBox(
                 height: 40,
@@ -140,10 +152,16 @@ class _RegisterViewState extends State<RegisterView> {
                       await AuthService.firebase()
                           .createUser(
                               email: emailController.text,
-                              password: passwordController.text                                                                                                                                                                                                                                                                                                                                                                                                                                                   )
-                          .then((value) => Navigator.of(context)
-                              .pushNamedAndRemoveUntil(
-                                  verifyEmailRoute, (route) => false));
+                              password: passwordController.text)
+                          .then((value) {
+                        userInfo(
+                          nameController.text,
+                          ageController.text,
+                          emailController.text,
+                        );
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            verifyEmailRoute, (route) => false);
+                      });
                       // final user = AuthService.firebase().currentUser;
                       AuthService.firebase().sendEmailVerification();
                     } on WeakPasswordAuthException {
