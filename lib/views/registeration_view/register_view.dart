@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/database/user_detailed.dart';
@@ -15,7 +17,13 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
+String email = 'you@example.com';
+String fullName = 'Null';
+String get mail => email;
+String get name => fullName;
+
 class _RegisterViewState extends State<RegisterView> {
+  final _formKey = GlobalKey<FormState>();
   late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController ageController;
@@ -50,176 +58,214 @@ class _RegisterViewState extends State<RegisterView> {
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ),
-          child: ListView(
-            children: [
-              Column(children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                Text(
-                  'Register',
-                  style: textTheme.headline1,
-                ),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                Column(children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    'Register',
+                    style: textTheme.headline1,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Create your new account',
+                    style: textTheme.headline3!.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                ]),
                 const SizedBox(
                   height: 20,
                 ),
-                Text(
-                  'Create your new account',
-                  style: textTheme.headline3!.copyWith(
-                    fontSize: 20,
+                InputField(
+                  controller: nameController,
+                  labelText: 'Full Name',
+                  validator: (p0) {
+                    String patttern = r'^[a-z A-Z,.\-]+$';
+                    RegExp regExp = RegExp(patttern);
+                    if (p0!.isEmpty) {
+                      return 'Please enter full name';
+                    } else if (!regExp.hasMatch(p0)) {
+                      return 'Please enter valid full name';
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(Icons.person_outlined),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                InputField(
+                  controller: emailController,
+                  labelText: 'Email',
+                  prefixIcon: const Icon(Icons.email_outlined),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                InputField(
+                  controller: ageController,
+                  labelText: 'Age',
+                  validator: (p0) {
+                    if (p0!.isEmpty) {
+                      showErrorDialog(context, 'How old are you');
+                    }
+                    if (p0.contains('abcdefghijklmnopqrstuvwxyz')) {
+                      return 'no nubers';
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(Icons.lock_outline),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                InputField(
+                  controller: passwordController,
+                  labelText: 'Password',
+                  prefixIcon: const Icon(Icons.lock_outline),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                InputField(
+                  controller: cPasswordController,
+                  labelText: 'Comfirm password',
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      showErrorDialog(context, 'Confirm password');
+                    }
+                    if (val != passwordController.text) {
+                      showErrorDialog(context, 'Password mismatch');
+                    }
+                    return null;
+                  },
+                  prefixIcon: const Icon(Icons.lock_outline),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: RichText(
+                      textAlign: TextAlign.center,
+                      text: const TextSpan(
+                          text: 'By signing you agree to our ',
+                          style: TextStyle(
+                            color: green,
+                          ),
+                          children: [
+                            TextSpan(
+                                text: 'term of use',
+                                style: TextStyle(
+                                  color: whiteGrey,
+                                )),
+                            TextSpan(
+                                text: '\nand ',
+                                style: TextStyle(
+                                  color: green,
+                                )),
+                            TextSpan(
+                                text: 'privacy notice.',
+                                style: TextStyle(
+                                  color: whiteGrey,
+                                ))
+                          ])),
+                ),
+                const SizedBox(
+                  height: 100,
+                ),
+                SizedBox(
+                  height: 40,
+                  width: MediaQuery.of(context).size.height / 1.5,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          await AuthService.firebase()
+                              .createUser(
+                                  email: emailController.text,
+                                  password: passwordController.text)
+                              .then((value) {
+                            email = emailController.text;
+                            fullName = nameController.text;
+                            UDBase().createUserInfo(
+                             name:nameController.text,
+                             age: ageController.text,
+                              email:emailController.text,
+                              
+                            );
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                verifyEmailRoute, (route) => false);
+                          });
+                          // final user = AuthService.firebase().currentUser;
+                          AuthService.firebase().sendEmailVerification();
+                        } on WeakPasswordAuthException {
+                          showErrorDialog(context, 'weak password');
+                        } on EmailAlreadyInUseAuthException {
+                          showErrorDialog(
+                            context,
+                            'Email is already in use',
+                          );
+                        } on GenericAuthException {
+                          showErrorDialog(
+                            context,
+                            'Failed to register',
+                          );
+                        } on InvalidEmailAuthException {
+                          showErrorDialog(
+                            context,
+                            'Enter a valid email address',
+                          );
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: green,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        textStyle: const TextStyle(fontSize: 18)),
+                    child: const Text('Register'),
                   ),
                 ),
-              ]),
-              const SizedBox(
-                height: 20,
-              ),
-              InputField(
-                controller: nameController,
-                labelText: 'Full Name',
-                prefixIcon: const Icon(Icons.person_outlined),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InputField(
-                controller: emailController,
-                labelText: 'Email',
-                prefixIcon: const Icon(Icons.email_outlined),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InputField(
-                controller: ageController,
-                labelText: 'Age',
-                prefixIcon: const Icon(Icons.lock_outline),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InputField(
-                controller: passwordController,
-                labelText: 'Password',
-                prefixIcon: const Icon(Icons.lock_outline),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              InputField(
-                controller: cPasswordController,
-                labelText: 'Comfirm password',
-                prefixIcon: const Icon(Icons.lock_outline),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: RichText(
-                    textAlign: TextAlign.center,
-                    text: const TextSpan(
-                        text: 'By signing you agree to our ',
-                        style: TextStyle(
-                          color: green,
-                        ),
-                        children: [
-                          TextSpan(
-                              text: 'term of use',
-                              style: TextStyle(
-                                color: whiteGrey,
-                              )),
-                          TextSpan(
-                              text: '\nand ',
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context).pushNamed(signInRoute),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: RichText(
+                        text: const TextSpan(
+                          text: "Already a member?",
+                          style: TextStyle(
+                            color: whiteGrey,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Login.',
                               style: TextStyle(
                                 color: green,
-                              )),
-                          TextSpan(
-                              text: 'privacy notice.',
-                              style: TextStyle(
-                                color: whiteGrey,
-                              ))
-                        ])),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              SizedBox(
-                height: 40,
-                width: MediaQuery.of(context).size.height / 1.5,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      await AuthService.firebase()
-                          .createUser(
-                              email: emailController.text,
-                              password: passwordController.text)
-                          .then((value) {
-                        userInfo(
-                          nameController.text,
-                          ageController.text,
-                          emailController.text,
-                        );
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            verifyEmailRoute, (route) => false);
-                      });
-                      // final user = AuthService.firebase().currentUser;
-                      AuthService.firebase().sendEmailVerification();
-                    } on WeakPasswordAuthException {
-                      showErrorDialog(context, 'weak password');
-                    } on EmailAlreadyInUseAuthException {
-                      showErrorDialog(
-                        context,
-                        'Email is already in use',
-                      );
-                    } on GenericAuthException {
-                      showErrorDialog(
-                        context,
-                        'Failed to register',
-                      );
-                    } on InvalidEmailAuthException {
-                      showErrorDialog(
-                        context,
-                        'Enter a valid email address',
-                      );
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: green,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      textStyle: const TextStyle(fontSize: 18)),
-                  child: const Text('Register'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed(signInRoute),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: RichText(
-                      text: const TextSpan(
-                        text: "Already a member?",
-                        style: TextStyle(
-                          color: whiteGrey,
+                              ),
+                            )
+                          ],
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'Login.',
-                            style: TextStyle(
-                              color: green,
-                            ),
-                          )
-                        ],
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  fullNameValidate(String fullName) {}
 }

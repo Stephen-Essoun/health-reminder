@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
-  List<Widget> pages = const [
+  List<Widget> pages =   [
     HomeView(),
     HealthView(),
     StatisticsView(),

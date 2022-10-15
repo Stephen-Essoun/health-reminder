@@ -66,7 +66,8 @@ class _SignInViewState extends State<SignInView> {
               const SizedBox(
                 height: 20,
               ),
-              Form(key: _formKey,
+              Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     InputField(
@@ -130,7 +131,7 @@ class _SignInViewState extends State<SignInView> {
                                   'Operation failed',
                                 );
                               }
-                            }, 
+                            },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: green,
                                 shape: RoundedRectangleBorder(
