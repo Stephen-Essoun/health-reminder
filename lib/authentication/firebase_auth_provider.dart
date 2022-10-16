@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../commons/utils/routes.dart';
 import '../firebase_options.dart';
@@ -35,7 +36,11 @@ class FirebaseAuthProvider implements AuthProvider {
       } else {
         throw GenericAuthException();
       }
-    }
+    } on PlatformException catch (e){
+      if(e.code == 'email-already-in-use'){
+        throw EmailAlreadyInUseAuthException();
+      } else{ throw GenericAuthException();}
+    } 
   }
 
   @override

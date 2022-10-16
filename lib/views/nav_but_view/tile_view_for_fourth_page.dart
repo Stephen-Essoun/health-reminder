@@ -31,6 +31,9 @@ class TileView extends StatelessWidget {
                 color: darkGrey,
               ),
             )),
+        const SizedBox(
+          height: 5,
+        ),
         const Tile(
             leading: Padding(
               padding: EdgeInsets.all(8.0),
@@ -47,6 +50,9 @@ class TileView extends StatelessWidget {
                 color: darkGrey,
               ),
             )),
+        const SizedBox(
+          height: 5,
+        ),
         const Tile(
             leading: Padding(
               padding: EdgeInsets.all(8.0),
@@ -63,6 +69,9 @@ class TileView extends StatelessWidget {
                 color: darkGrey,
               ),
             )),
+        const SizedBox(
+          height: 5,
+        ),
         const Tile(
             leading: Padding(
               padding: EdgeInsets.all(8.0),
@@ -79,6 +88,9 @@ class TileView extends StatelessWidget {
                 color: darkGrey,
               ),
             )),
+        const SizedBox(
+          height: 5,
+        ),
         const Tile(
             leading: Padding(
               padding: EdgeInsets.all(8.0),
@@ -95,6 +107,9 @@ class TileView extends StatelessWidget {
                 color: darkGrey,
               ),
             )),
+        const SizedBox(
+          height: 5,
+        ),
         Tile(
           onPressed: () async {
             await AuthService.firebase().logout().then(

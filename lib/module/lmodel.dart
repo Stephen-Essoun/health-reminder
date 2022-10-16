@@ -94,26 +94,24 @@ List lmodel = [
       leading: 'images/amlokard.png',
       title: 'Amlokard',
       subtitle: '2 pills',
-      trailing: Expanded(
-        child: Row(
-          children: [
-            ...List.generate(
-              cmodel.length,
-              (index) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                ),
-                child: Container(
-                  height: 6,
-                  width: 6,
-                  decoration: const BoxDecoration(
-                    color: green,
-                    shape: BoxShape.circle,
-                  ),
+      trailing: Row(
+        children: [
+          ...List.generate(
+            cmodel.length,
+            (index) => Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 4,
+              ),
+              child: Container(
+                height: 6,
+                width: 6,
+                decoration: const BoxDecoration(
+                  color: green,
+                  shape: BoxShape.circle,
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       )),
 ];

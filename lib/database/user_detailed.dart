@@ -1,8 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:pillset/authentication/auth_service.dart';
-import 'package:pillset/authentication/auth_user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; 
 
 class UDBase {
   CollectionReference db = FirebaseFirestore.instance.collection('users');

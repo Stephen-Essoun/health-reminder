@@ -104,6 +104,12 @@ class _RegisterViewState extends State<RegisterView> {
                 InputField(
                   controller: emailController,
                   labelText: 'Email',
+                  validator: (p0) {
+                    if (!p0!.contains('@')) {
+                      return 'Please check your email';
+                    }
+                    return null;
+                  },
                   prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 const SizedBox(
@@ -114,7 +120,7 @@ class _RegisterViewState extends State<RegisterView> {
                   labelText: 'Age',
                   validator: (p0) {
                     if (p0!.isEmpty) {
-                      showErrorDialog(context, 'How old are you');
+                      return 'How old are you';
                     }
                     if (p0.contains('abcdefghijklmnopqrstuvwxyz')) {
                       return 'no nubers';
@@ -129,6 +135,12 @@ class _RegisterViewState extends State<RegisterView> {
                 InputField(
                   controller: passwordController,
                   labelText: 'Password',
+                  validator: (p0) {
+                    if (p0!.length < 6) {
+                      return 'weak password';
+                    }
+                    return null;
+                  },
                   prefixIcon: const Icon(Icons.lock_outline),
                 ),
                 const SizedBox(
@@ -139,10 +151,10 @@ class _RegisterViewState extends State<RegisterView> {
                   labelText: 'Comfirm password',
                   validator: (val) {
                     if (val!.isEmpty) {
-                      showErrorDialog(context, 'Confirm password');
+                      return 'confirm password';
                     }
                     if (val != passwordController.text) {
-                      showErrorDialog(context, 'Password mismatch');
+                      return 'Password mismatch';
                     }
                     return null;
                   },
@@ -196,10 +208,9 @@ class _RegisterViewState extends State<RegisterView> {
                             email = emailController.text;
                             fullName = nameController.text;
                             UDBase().createUserInfo(
-                             name:nameController.text,
-                             age: ageController.text,
-                              email:emailController.text,
-                              
+                              name: nameController.text,
+                              age: ageController.text,
+                              email: emailController.text,
                             );
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 verifyEmailRoute, (route) => false);
