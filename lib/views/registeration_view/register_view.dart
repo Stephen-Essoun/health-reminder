@@ -84,6 +84,8 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 20,
                 ),
                 InputField(
+                  keyboardType: TextInputType.name,
+                  obscureText: false,
                   controller: nameController,
                   labelText: 'Full Name',
                   validator: (p0) {
@@ -102,10 +104,15 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 15,
                 ),
                 InputField(
+                  keyboardType: TextInputType.emailAddress,
+                  obscureText: false,
                   controller: emailController,
                   labelText: 'Email',
                   validator: (p0) {
-                    if (!p0!.contains('@')) {
+                    if (p0!.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    if (!p0.contains('@')) {
                       return 'Please check your email';
                     }
                     return null;
@@ -116,6 +123,8 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 15,
                 ),
                 InputField(
+                  keyboardType: TextInputType.number,
+                  obscureText: false,
                   controller: ageController,
                   labelText: 'Age',
                   validator: (p0) {
@@ -133,12 +142,18 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 15,
                 ),
                 InputField(
+                  keyboardType: TextInputType.multiline,
                   controller: passwordController,
                   labelText: 'Password',
+                  obscureText: true,
                   validator: (p0) {
-                    if (p0!.length < 6) {
+                    if (p0!.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    if (p0.length < 6) {
                       return 'weak password';
                     }
+
                     return null;
                   },
                   prefixIcon: const Icon(Icons.lock_outline),
@@ -147,7 +162,9 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 15,
                 ),
                 InputField(
+                  keyboardType: TextInputType.multiline,
                   controller: cPasswordController,
+                  obscureText: true,
                   labelText: 'Comfirm password',
                   validator: (val) {
                     if (val!.isEmpty) {
@@ -191,7 +208,7 @@ class _RegisterViewState extends State<RegisterView> {
                           ])),
                 ),
                 const SizedBox(
-                  height: 100,
+                  height: 30,
                 ),
                 SizedBox(
                   height: 40,

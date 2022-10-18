@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/providers/auth_state.dart';
 import 'package:pillset/providers/click_to_swap_provider.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [Provider(create: (_) => Clicked())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+       
         home: const AuthState(),
         // initialRoute: signInRoute,
         routes: {

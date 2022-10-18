@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/routes.dart';
@@ -70,16 +72,39 @@ class _SignInViewState extends State<SignInView> {
                 child: Column(
                   children: [
                     InputField(
+                      keyboardType: TextInputType.emailAddress,
+                      obscureText: false,
                       controller: emailController,
                       labelText: 'Email',
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!p0.contains('@')) {
+                          return 'Please check your email';
+                        }
+                        return null;
+                      },
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     const SizedBox(
                       height: 15,
                     ),
                     InputField(
+                      keyboardType: TextInputType.multiline,
+                      obscureText: true,
                       controller: passwordController,
                       labelText: 'Password',
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        if (p0.length < 6) {
+                          return 'weak password';
+                        }
+
+                        return null;
+                      },
                       prefixIcon: const Icon(Icons.lock_outline),
                     ),
                     Align(
@@ -97,38 +122,43 @@ class _SignInViewState extends State<SignInView> {
                         width: MediaQuery.of(context).size.height / 1.5,
                         child: ElevatedButton(
                             onPressed: () async {
-                              try {
-                                await AuthService.firebase().login(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                );
-                                final user = AuthService.firebase().currentUser;
-                                if (user?.isEmailVerified ?? false) {
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                    homeRoute,
-                                    (route) => false,
+                              if (_formKey.currentState!.validate()) {
+                                try {
+                                  await AuthService.firebase().login(
+                                    email: emailController.text,
+                                    password: passwordController.text,
                                   );
-                                } else {
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                    verifyEmailRoute,
-                                    (route) => false,
+                                  final user =
+                                      AuthService.firebase().currentUser;
+                                  if (user?.isEmailVerified ?? false) {
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                      homeRoute,
+                                      (route) => false,
+                                    );
+                                  } else {
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                      verifyEmailRoute,
+                                      (route) => false,
+                                    );
+                                  }
+                                } on WrongPasswordAuthException {
+                                  showErrorDialog(
+                                    context,
+                                    'wrong password',
+                                  );
+                                } on UserNotFoundAuthException {
+                                  showErrorDialog(
+                                    context,
+                                    'user not found',
+                                  );
+                                } on GenericAuthException {
+                                  showErrorDialog(
+                                    context,
+                                    'Operation failed',
                                   );
                                 }
-                              } on WrongPasswordAuthException {
-                                showErrorDialog(
-                                  context,
-                                  'wrong password',
-                                );
-                              } on UserNotFoundAuthException {
-                                showErrorDialog(
-                                  context,
-                                  'user not found',
-                                );
-                              } on GenericAuthException {
-                                showErrorDialog(
-                                  context,
-                                  'Operation failed',
-                                );
                               }
                             },
                             style: ElevatedButton.styleFrom(
