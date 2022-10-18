@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pillset/commons/utils/loading.dart';
 import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/database/user_detailed.dart';
 import '../../authentication/auth_exception.dart';
@@ -153,7 +154,6 @@ class _RegisterViewState extends State<RegisterView> {
                     if (p0.length < 6) {
                       return 'weak password';
                     }
-
                     return null;
                   },
                   prefixIcon: const Icon(Icons.lock_outline),
@@ -216,6 +216,7 @@ class _RegisterViewState extends State<RegisterView> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                       isLoadingDialogue(context);
                         try {
                           await AuthService.firebase()
                               .createUser(
@@ -232,7 +233,7 @@ class _RegisterViewState extends State<RegisterView> {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 verifyEmailRoute, (route) => false);
                           });
-                          // final user = AuthService.firebase().currentUser;
+                          final user = AuthService.firebase().currentUser;
                           AuthService.firebase().sendEmailVerification();
                         } on WeakPasswordAuthException {
                           showErrorDialog(context, 'weak password');

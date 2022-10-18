@@ -1,10 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/providers/auth_state.dart';
 import 'package:pillset/providers/click_to_swap_provider.dart';
-import 'package:pillset/views/main_screen.dart';
+import 'package:pillset/views/home_view.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'views/onboarding_view/onboarding.dart';
@@ -27,14 +26,14 @@ class MyApp extends StatelessWidget {
       providers: [Provider(create: (_) => Clicked())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-       
+
         home: const AuthState(),
         // initialRoute: signInRoute,
         routes: {
           onBoardRoute: (context) => const OnBoradingPage(),
           signInRoute: (context) => const SignInView(),
           registerRoute: (context) => const RegisterView(),
-          homeRoute: (context) => const MainScreen(),
+          homeRoute: (context) => const HomeView(),
           verifyEmailRoute: (context) => const VerifyEmailView(),
         },
       ),

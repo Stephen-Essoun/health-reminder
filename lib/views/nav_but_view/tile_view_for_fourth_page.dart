@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:pillset/commons/utils/loading.dart';
 
 import '../../authentication/auth_service.dart';
 import '../../commons/components/profile_listtile.dart';
@@ -112,13 +110,14 @@ class TileView extends StatelessWidget {
         ),
         Tile(
           onPressed: () async {
-            await AuthService.firebase().logout().then(
+            isLoadingDialogue(context);
+          Future.delayed(const Duration(seconds: 1),()async { await AuthService.firebase().logout().then(
                   (value) => Navigator.pushNamedAndRemoveUntil(
                     context,
                     signInRoute,
                     (route) => false,
                   ),
-                );
+                );});
           },
           leading: const Padding(
             padding: EdgeInsets.all(8.0),

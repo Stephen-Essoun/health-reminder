@@ -9,6 +9,7 @@ import 'package:pillset/commons/components/textfield.dart';
 import '../../authentication/auth_exception.dart';
 import '../../authentication/auth_service.dart';
 import '../../commons/utils/error_dialogue.dart';
+import '../../commons/utils/loading.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -123,6 +124,7 @@ class _SignInViewState extends State<SignInView> {
                         child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
+                                isLoadingDialogue(context);
                                 try {
                                   await AuthService.firebase().login(
                                     email: emailController.text,
