@@ -135,7 +135,7 @@ class _SignInViewState extends State<SignInView> {
                                   if (user?.isEmailVerified ?? false) {
                                     Navigator.of(context)
                                         .pushNamedAndRemoveUntil(
-                                      homeRoute,
+                                      mainScreen,
                                       (route) => false,
                                     );
                                   } else {

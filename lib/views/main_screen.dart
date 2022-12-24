@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
-  List<Widget> pages =  const [
+  List<Widget> pages = const [
     HomeView(),
     HealthView(),
     StatisticsView(),
@@ -26,8 +26,8 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     OnTap onTap = OnTap();
     return ValueListenableBuilder(
-       valueListenable: onTap,
-      builder: (context,value,child) {
+      valueListenable: onTap,
+      builder: (context, value, child) {
         return Scaffold(
           extendBody: true,
           body: SafeArea(
@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
             color: white,
             shape: const CircularNotchedRectangle(),
             child: BottomNavigationBar(
-                 backgroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
                 elevation: 0,
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: green,
@@ -47,10 +47,10 @@ class _MainScreenState extends State<MainScreen> {
                 currentIndex: value,
                 selectedFontSize: 0,
                 unselectedFontSize: 0,
-                onTap: (index) =>
-                    onTap.whenTapped(index),
+                onTap: (index) => onTap.whenTapped(index),
                 items: const [
-                  BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: ''),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.home_filled), label: ''),
                   BottomNavigationBarItem(
                       icon: FaIcon(FontAwesomeIcons.fire), label: ''),
                   BottomNavigationBarItem(
@@ -58,7 +58,8 @@ class _MainScreenState extends State<MainScreen> {
                   BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
                 ]),
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
             onPressed: () {},
             backgroundColor: darkGrey,

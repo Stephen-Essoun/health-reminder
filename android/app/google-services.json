@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "475169083092",
-    "project_id": "pillset",
-    "storage_bucket": "pillset.appspot.com"
+    "project_number": "52258832876",
+    "project_id": "pillset-a970c",
+    "storage_bucket": "pillset-a970c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:475169083092:android:0046396dea702f656d7541",
+        "mobilesdk_app_id": "1:52258832876:android:866a13bf67b3d4c62c00c9",
         "android_client_info": {
           "package_name": "essoun.stephen.pillset"
         }
       },
       "oauth_client": [
         {
-          "client_id": "475169083092-5sljshh7n08h9lh9rk475ecd1728rdoh.apps.googleusercontent.com",
+          "client_id": "52258832876-01l8tqp6c4pp11n7veiego7vsihmtdno.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCxwiakt0LdCyPcN8Ums8ypVZf-ofLSJ8g"
+          "current_key": "AIzaSyAJF3OquU3t-SBJflFpagIblwXRgFrLB5M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "475169083092-5sljshh7n08h9lh9rk475ecd1728rdoh.apps.googleusercontent.com",
+              "client_id": "52258832876-01l8tqp6c4pp11n7veiego7vsihmtdno.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

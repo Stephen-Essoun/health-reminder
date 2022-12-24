@@ -4,6 +4,7 @@ import 'package:pillset/commons/utils/routes.dart';
 import 'package:pillset/providers/auth_state.dart';
 import 'package:pillset/providers/click_to_swap_provider.dart';
 import 'package:pillset/views/home_view.dart';
+import 'package:pillset/views/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'views/onboarding_view/onboarding.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
           registerRoute: (context) => const RegisterView(),
           homeRoute: (context) => const HomeView(),
           verifyEmailRoute: (context) => const VerifyEmailView(),
+          mainScreen: (context) => const MainScreen()
         },
       ),
     );
