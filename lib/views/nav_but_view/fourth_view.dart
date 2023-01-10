@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:pillset/authentication/auth_service.dart';
 import 'package:pillset/commons/components/appbar.dart';
 import 'package:pillset/commons/utils/colors.dart';

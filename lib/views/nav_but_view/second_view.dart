@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pillset/commons/components/appbar.dart';
 import '../../commons/utils/colors.dart';
 import '../../commons/utils/text_theme.dart';
-import '../../module/container_module.dart';
+import '../../model/container_module.dart';
 
 class HealthView extends StatelessWidget {
   const HealthView({super.key});

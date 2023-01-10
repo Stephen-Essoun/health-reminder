@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/routes.dart';
-import 'package:pillset/module/onboard_module.dart';
+import 'package:pillset/model/onboard_module.dart';
 import 'onboarding_class.dart';
 
 class OnBoradingPage extends StatefulWidget {

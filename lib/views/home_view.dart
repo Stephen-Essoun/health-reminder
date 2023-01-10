@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pillset/commons/utils/colors.dart';
 import 'package:pillset/commons/utils/text_theme.dart';
-import 'package:pillset/module/container_module.dart';
-import 'package:pillset/module/lmodel.dart';
+import 'package:pillset/model/container_module.dart';
+import 'package:pillset/model/lmodel.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../commons/components/appbar.dart';
 
