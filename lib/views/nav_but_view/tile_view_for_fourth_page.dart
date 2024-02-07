@@ -110,7 +110,7 @@ class TileView extends StatelessWidget {
         ),
         Tile(
           onPressed: () async {
-            isLoadingDialogue(context);
+            showLoadingDialog(context);
           Future.delayed(const Duration(seconds: 1),()async { await AuthService.firebase().logout().then(
                   (value) => Navigator.pushNamedAndRemoveUntil(
                     context,

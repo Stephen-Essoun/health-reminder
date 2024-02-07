@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pillset/commons/utils/colors.dart';
 
 bool isLoading = false;
 
 final spinkit = SpinKitCircle(
-  itemBuilder: (BuildContext context, int index) {
-    return const DecoratedBox(
-      decoration: BoxDecoration(
-        color: Colors.blue,
-      ),
-    );
-  },
+  color: green, // Set the color of the spinner
 );
 
-void isLoadingDialogue(BuildContext context) {
-  if (isLoading == false) {
+void showLoadingDialog(BuildContext context) {
+  if (!isLoading) {
+    isLoading = true;
     showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) => Center(
-              child: spinkit,
-            ));
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => Center(child: spinkit),
+    );
+  }
+}
+
+void hideLoadingDialog(BuildContext context) {
+  if (isLoading) {
+    isLoading = false;
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
   }
 }

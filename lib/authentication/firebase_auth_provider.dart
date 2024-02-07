@@ -1,15 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pillset/authentication/auth_provider.dart' as auth_pro;
 
-import '../commons/utils/routes.dart';
 import '../firebase_options.dart';
 import 'auth_exception.dart';
-import 'auth_provider.dart';
 import 'auth_user.dart';
 
-class FirebaseAuthProvider implements AuthProvider {
+class FirebaseAuthProvider implements auth_pro.AuthProvider {
   @override
   Future<AuthUser> createUser({
     required String email,

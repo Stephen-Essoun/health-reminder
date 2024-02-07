@@ -124,12 +124,15 @@ class _SignInViewState extends State<SignInView> {
                         child: ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                isLoadingDialogue(context);
+                                showLoadingDialog(context);
+
                                 try {
                                   await AuthService.firebase().login(
                                     email: emailController.text,
                                     password: passwordController.text,
                                   );
+                                  hideLoadingDialog(context);
+
                                   final user =
                                       AuthService.firebase().currentUser;
                                   if (user?.isEmailVerified ?? false) {
@@ -146,20 +149,25 @@ class _SignInViewState extends State<SignInView> {
                                     );
                                   }
                                 } on WrongPasswordAuthException {
+                                  hideLoadingDialog(context);
                                   showErrorDialog(
                                     context,
                                     'wrong password',
                                   );
                                 } on UserNotFoundAuthException {
+                                  hideLoadingDialog(context);
                                   showErrorDialog(
                                     context,
                                     'user not found',
                                   );
                                 } on GenericAuthException {
+                                  hideLoadingDialog(context);
                                   showErrorDialog(
                                     context,
                                     'Operation failed',
                                   );
+                                } finally {
+                                  hideLoadingDialog(context);
                                 }
                               }
                             },

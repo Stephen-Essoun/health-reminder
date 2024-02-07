@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -216,7 +218,7 @@ class _RegisterViewState extends State<RegisterView> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                       isLoadingDialogue(context);
+                        showLoadingDialog(context);
                         try {
                           await AuthService.firebase()
                               .createUser(
@@ -233,8 +235,8 @@ class _RegisterViewState extends State<RegisterView> {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 verifyEmailRoute, (route) => false);
                           });
-                          final user = AuthService.firebase().currentUser;
-                          AuthService.firebase().sendEmailVerification();
+                          // final user = AuthService.firebase().currentUser;
+                          // AuthService.firebase().sendEmailVerification();
                         } on WeakPasswordAuthException {
                           showErrorDialog(context, 'weak password');
                         } on EmailAlreadyInUseAuthException {
@@ -243,6 +245,7 @@ class _RegisterViewState extends State<RegisterView> {
                             'Email is already in use',
                           );
                         } on GenericAuthException {
+                          
                           showErrorDialog(
                             context,
                             'Failed to register',
@@ -252,6 +255,8 @@ class _RegisterViewState extends State<RegisterView> {
                             context,
                             'Enter a valid email address',
                           );
+                        }finally{
+                          hideLoadingDialog(context);
                         }
                       }
                     },
@@ -296,5 +301,4 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  fullNameValidate(String fullName) {}
 }
